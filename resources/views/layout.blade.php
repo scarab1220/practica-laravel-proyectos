@@ -3,33 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Práctica Laravel</title>
-  <style>
-    body{font-family: Arial, sans-serif; margin:24px;}
-    table{width:100%; border-collapse:collapse;}
-    th,td{border:1px solid #ccc; padding:8px; text-align:left;}
-    .row{display:flex; gap:12px; align-items:center; justify-content:space-between;}
-    .btn{padding:6px 10px; border:1px solid #333; background:#fff; cursor:pointer; text-decoration:none; color:#000;}
-    .btn-danger{border-color:#b00;}
-    .msg{padding:10px; background:#e7ffe7; border:1px solid #7c7; margin:10px 0;}
-    .field{margin:10px 0;}
-    input{padding:8px; width:100%; max-width:520px;}
-  </style>
+  <title>@yield('title', 'Proyectos')</title>
+
+  <!-- Bootstrap 5 (CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-  <div class="row">
-    <h2>Proyectos</h2>
-    <div>
-      <a class="btn" href="{{ route('proyectos.index') }}">Listado</a>
-      <a class="btn" href="{{ route('proyectos.create') }}">Nuevo</a>
-      <a class="btn" href="{{ route('proyectos.pdf') }}">PDF</a>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-semibold" href="{{ route('proyectos.index') }}">Práctica Laravel</a>
+    <div class="ms-auto d-flex gap-2">
+      <a class="btn btn-outline-primary" href="{{ route('proyectos.index') }}">Listado</a>
+      <a class="btn btn-primary" href="{{ route('proyectos.create') }}">Nuevo</a>
+      <a class="btn btn-outline-dark" href="{{ route('proyectos.pdf') }}">PDF</a>
     </div>
   </div>
+</nav>
 
+<main class="container py-4">
   @if (session('ok'))
-    <div class="msg">{{ session('ok') }}</div>
+    <div class="alert alert-success">{{ session('ok') }}</div>
+  @endif
+
+  @if ($errors->any())
+    <div class="alert alert-danger">
+      <div class="fw-semibold mb-2">Revisa los campos:</div>
+      <ul class="mb-0">
+        @foreach($errors->all() as $e) <li>{{ $e }}</li> @endforeach
+      </ul>
+    </div>
   @endif
 
   @yield('content')
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
